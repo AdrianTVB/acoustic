@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Acoustic
+namespace TestApp_QuadTree.Src
 {
-    public partial class Form1 : Form
+    public class InvalidCommandException : Exception
     {
-        public Form1()
+        public InvalidCommandException(string message) : base(message)
         {
-            InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)

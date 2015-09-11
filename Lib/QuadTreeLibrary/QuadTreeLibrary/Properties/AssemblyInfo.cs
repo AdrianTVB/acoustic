@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Acoustic")]
+[assembly: AssemblyTitle("QuadTreeLibrary")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Acoustic")]
+[assembly: AssemblyProduct("QuadTreeLibrary")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cb8dc85d-6717-4b4f-b8a0-bff41be15ca6")]
+[assembly: Guid("77f4dc32-458b-4620-bd12-32f2fa5ced27")]
 
 // Version information for an assembly consists of the following four values:
 //
