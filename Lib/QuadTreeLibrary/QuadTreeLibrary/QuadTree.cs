@@ -148,6 +148,11 @@ namespace QuadTreeLibrary
                 return results;
             }
         }
+
+        public List<T> Query(int x, int y)
+        {
+            return Query(new Rect(new Point(x, y), new Size(1, 1)));
+        }
         
         private void Query(Rect bounds, QuadNode node, List<T> results)
         {

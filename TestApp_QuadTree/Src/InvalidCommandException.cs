@@ -11,10 +11,5 @@ namespace TestApp_QuadTree.Src
         public InvalidCommandException(string message) : base(message)
         {
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

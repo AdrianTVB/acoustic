@@ -12,6 +12,8 @@ namespace TestApp_QuadTree.Src
     public class Tile : List<Army>, IPoint 
     {
         private bool atMaxResourceLevel = true;
+        private Region region;
+
         public bool FightGoingOn { get; set; }
 
         public enum TileTypeEnum
@@ -30,6 +32,18 @@ namespace TestApp_QuadTree.Src
             Chicken
         }
 
+        public Tile(int coordinateX, int coordinateY, TileTypeEnum tileType, ResourceTypeEnum resourceType, Region region)
+        {
+            CoordinateX = coordinateX;
+            CoordinateY = coordinateY;
+            TileType = tileType;
+            ResourceType = resourceType;
+            CurrentRegion = region;
+            DailyResourceIncrement = (int)resourceType;
+            MaximumResourceLevel = DailyResourceIncrement * 100;
+            CurrentResourceLevel = MaximumResourceLevel;
+        }
+        
         public int CoordinateX { get; set; }
         public int CoordinateY { get; set; }
 
@@ -128,7 +142,7 @@ namespace TestApp_QuadTree.Src
                 List<Army> oppositionSide = new List<Army>();
                 foreach (Army unitAlreadyOnTile in this)
                 {
-                    if (newArmy.Owner.IsHostile[unitAlreadyOnTile.Owner])
+                    if (newArmy.Owner != unitAlreadyOnTile.Owner && newArmy.Owner.IsHostile[unitAlreadyOnTile.Owner])
                     {
                         // Start a fight with them.
                         oppositionSide.Add(unitAlreadyOnTile);

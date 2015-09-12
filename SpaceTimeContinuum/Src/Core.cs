@@ -7,7 +7,7 @@ using TestApp_QuadTree.Src;
 
 namespace SpaceTimeContinuum.Src
 {
-    class Core
+    public class Core
     {
         public World MyWorld { get; set; }
         public Core(World myWorld)
@@ -33,7 +33,7 @@ namespace SpaceTimeContinuum.Src
                             endTurn = true;
                             break;
                         default:
-                            if (command != null && (command.Contains("move") || command.Contains("Move")))
+                            if (command != null && (command.IndexOf("move") > -1 || command.IndexOf("Move") > -1))
                             {
                                 string[] commandElements = command.Split(' ', '-');
                                 int armyIndex;
@@ -72,6 +72,8 @@ namespace SpaceTimeContinuum.Src
                                                     }
                                                 }
                                             }
+
+                                            break;
                                         }
                                     }
                                 }
@@ -88,7 +90,7 @@ namespace SpaceTimeContinuum.Src
             }
         }
 
-        public void Run(World world)
+        public void Run()
         {
             int day = 0;
             bool stopApplication = false;
@@ -104,7 +106,7 @@ namespace SpaceTimeContinuum.Src
                     {
                         Army army = player.Armies[i];
                         Console.WriteLine(
-                            @"{0}= Army {1}:{2} is at {3}-{4}", 
+                            @"\t{0}= Army {1}:{2} is at {3}-{4}", 
                             i,
                             army.ArmyName, 
                             army.ArmyCount, 
@@ -114,8 +116,7 @@ namespace SpaceTimeContinuum.Src
                     // TODO: Print something about resources.
 
                     Console.WriteLine(@"What would you like to do {0}?", player.PlayerName);
-                    TakeCommand(world, player);
-
+                    TakeCommand(MyWorld, player);
                 }
             }
         }

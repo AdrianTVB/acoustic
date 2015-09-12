@@ -17,7 +17,7 @@ namespace TestApp_QuadTree.Src
 
         public new void Add(Tile newTile)
         {
-            world.TileQuadTree.Insert(newTile);
+            world.AddTile(newTile);
             base.Add(newTile);
         }
     }

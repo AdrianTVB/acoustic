@@ -8,6 +8,13 @@ namespace TestApp_QuadTree.Src
 {
     public class Army : List<Regiment>
     {
+        public Army(string armyName, Tile tile, Player owner)
+        {
+            ArmyName = armyName;
+            CurrentTile = tile;
+            Owner = owner;
+        }
+
         public Tile CurrentTile { get; set; }
         public Player Owner { get; set; }
         public string ArmyName { get; set; }

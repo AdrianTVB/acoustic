@@ -35,7 +35,7 @@ namespace TestApp_QuadTree.Src
                 throw new InvalidCommandException(string.Format("Cannot move from tile {0}-{1} as there is a fight going on.", army.CurrentTile.CoordinateX, army.CurrentTile.CoordinateY));   
             }
 
-            Tile newTile = world.TileQuadTree.Query(new Rect(new Point(newCoordinateX, newCoordinateY), new Size(1, 1))).FirstOrDefault();
+            Tile newTile = world.TileGrid[newCoordinateX, newCoordinateY];
 
             if (newTile == null)
             {

@@ -8,8 +8,58 @@ namespace TestApp_QuadTree.Src
 {
     public class UnitType
     {
-        public double OffensiveStrength { get; set; }
-        public double DefensiveStrength { get; set; }
-        public double MaximumMoral { get; set; }
+        private static string unitName = "genericUnit";
+        private static double offensiveStrength = 5;
+        private static double defensiveStrength = 5;
+        private static double maximumMoral = 1;
+        public string UnitName
+        {
+            get
+            {
+                return unitName;
+            }
+
+            set
+            {
+                unitName = value;
+            }
+        }
+        public double OffensiveStrength
+        {
+            get
+            {
+                return offensiveStrength;
+            }
+
+            set
+            {
+                offensiveStrength = value;
+            }
+        }
+        public double DefensiveStrength
+        {
+            get
+            {
+                return defensiveStrength;
+            }
+
+            set
+            {
+                defensiveStrength = value;
+            }
+        }
+        public double MaximumMoral
+        {
+            get
+            {
+                return maximumMoral;
+            }
+
+            set
+            {
+                maximumMoral = value;
+            }
+        }
+
     }
 }

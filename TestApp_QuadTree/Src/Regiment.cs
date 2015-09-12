@@ -8,6 +8,13 @@ namespace TestApp_QuadTree.Src
 {
     public class Regiment
     {
+        public Regiment(int manCount, UnitType unitType)
+        {
+            ManCount = manCount;
+            UnitTypeInRegiment = unitType;
+            Moral = 1;
+        }
+
         public UnitType UnitTypeInRegiment { get; set; }
         public int ManCount { get; set; }
         public double Moral { get; set; }
