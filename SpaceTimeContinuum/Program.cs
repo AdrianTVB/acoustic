@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestApp_QuadTree.Src;
+using TestApp_QuadTree.Src.Resources;
+using TestApp_QuadTree.Src.Terrains;
 
 namespace SpaceTimeContinuum
 {
@@ -19,7 +21,6 @@ namespace SpaceTimeContinuum
 
         static World ConstructNewZealand()
         {
-            World world = new World(1000, 1000);
 
             string[] regions = new string[]
             {
@@ -35,22 +36,45 @@ namespace SpaceTimeContinuum
                 "Southland"
             };
 
+            List<Resource> availableResources = new List<Resource>
+            {
+                new Wood(),
+                new Stone(),
+                new Moa(),
+                new Chicken()
+            };
+
+            List<Terrain> availableTerrain = new List<Terrain>
+            {
+                new Grassland(),
+                new Mountains(), 
+                new Forest(), 
+                new Marsh(),
+            };
+
+            int maxHeight = 30;
+            int maxWidth = 30;
+
+            World world = new World(maxHeight, maxWidth, availableResources, availableTerrain);
+            
             Random randomNumberGenerator = new Random();
             for(int i = 0; i < regions.Length; i++)
             {
                 string regionName = regions[i];
                 Region region = new Region(world);
                 world.Regions.Add(region);
-                int tileWidth = randomNumberGenerator.Next(2, 10);
-                int tileHeight = randomNumberGenerator.Next(2, 10);
-                int regionModifier = i * 10;
-                for (int width = 0; width < tileWidth; width++)
+                for (int tileCounter = 0; tileCounter < 100; tileCounter++)
                 {
-                    for (int height = 0; height < tileHeight; height++)
+                    int tileWidth = randomNumberGenerator.Next(1, 29);
+                    int tileHeight = randomNumberGenerator.Next(1, 29);
+                    if (world.TileGrid[tileWidth, tileHeight] == null)
                     {
-                        int tileType = randomNumberGenerator.Next(0, Enum.GetValues(typeof(Tile.TileTypeEnum)).Length);
-                        int resourceType = randomNumberGenerator.Next(0, Enum.GetValues(typeof(Tile.ResourceTypeEnum)).Length);
-                        Tile tile = new Tile(regionModifier + width, regionModifier + height, (Tile.TileTypeEnum)tileType, (Tile.ResourceTypeEnum)resourceType, region);
+                        int terrainIndex = randomNumberGenerator.Next(0, availableTerrain.Count);
+                        Terrain terrain = availableTerrain[terrainIndex];
+                        int resourceIndex = randomNumberGenerator.Next(0, availableResources.Count);
+                        Resource resource = availableResources[resourceIndex];
+
+                        Tile tile = new Tile(tileWidth, tileHeight, terrain, resource, 5, region);
                         region.Add(tile);
                     }
                 }
@@ -58,12 +82,31 @@ namespace SpaceTimeContinuum
 
 
 
-            Player playerOne = new Player("Player One");
+            Player playerOne = new Player("Player One", 'X');
             world.Players.Add(playerOne);
+            Tile armyOneStartTile = null;
+            Tile armyTwoStartTile = null;
+            for (int width = 0; width < world.TileGrid.GetLength(0); width++)
+            {
+                for (int height = 0; height < world.TileGrid.GetLength(0); height++)
+                {
+                    if (world.TileGrid[width, height] != null)
+                    {
+                        if (armyOneStartTile == null)
+                        {
+                            armyOneStartTile = world.TileGrid[width, height];
+                        }
+                        else if(armyTwoStartTile == null)
+                        {
+                            armyTwoStartTile = world.TileGrid[width, height];
+                            break;
+                        }
+                    }
+                }
+            }
 
-            Tile tileOne = world.TileGrid[1, 1];
-            Army armyOne = new Army("armyOne", tileOne, playerOne);
-            tileOne.Add(armyOne);
+            Army armyOne = new Army("armyOne", armyOneStartTile, playerOne);
+            armyOneStartTile.Add(armyOne);
             playerOne.Armies.Add(armyOne);
             int regimentCount = randomNumberGenerator.Next(0, 10);
             for (int i = 0; i < regimentCount; i++)
@@ -73,12 +116,11 @@ namespace SpaceTimeContinuum
             }
 
 
-            Player playerTwo = new Player("Player Two");
+            Player playerTwo = new Player("Player Two", 'T');
             world.Players.Add(playerTwo);
-
-            Tile tileTwo = world.TileGrid[2, 2];
-            Army armyTwo = new Army("armyTwo", tileOne, playerTwo);
-            tileTwo.Add(armyTwo);
+            
+            Army armyTwo = new Army("armyTwo", armyTwoStartTile, playerTwo);
+            armyTwoStartTile.Add(armyTwo);
             playerTwo.Armies.Add(armyOne);
             int playerTwoRegimentCount = randomNumberGenerator.Next(0, 10);
             for (int i = 0; i < playerTwoRegimentCount; i++)

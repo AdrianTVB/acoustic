@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using CSharpQuadTree;
+using TestApp_QuadTree.Src.Resources;
+using TestApp_QuadTree.Src.Terrains;
 
 namespace TestApp_QuadTree.Src
 {
@@ -15,31 +17,15 @@ namespace TestApp_QuadTree.Src
         private Region region;
 
         public bool FightGoingOn { get; set; }
-
-        public enum TileTypeEnum
-        {
-            Grassland, 
-            Forest, 
-            MountainRange, 
-            Marsh,
-        }
-
-        public enum ResourceTypeEnum
-        {
-            Wood,
-            Stone, 
-            Moa, 
-            Chicken
-        }
-
-        public Tile(int coordinateX, int coordinateY, TileTypeEnum tileType, ResourceTypeEnum resourceType, Region region)
+        
+        public Tile(int coordinateX, int coordinateY, Terrain terrain, Resource resource, int dailyResourceIncrement, Region region)
         {
             CoordinateX = coordinateX;
             CoordinateY = coordinateY;
-            TileType = tileType;
-            ResourceType = resourceType;
+            TerrainType = terrain;
+            ResourceType = resource;
             CurrentRegion = region;
-            DailyResourceIncrement = (int)resourceType;
+            DailyResourceIncrement = dailyResourceIncrement;
             MaximumResourceLevel = DailyResourceIncrement * 100;
             CurrentResourceLevel = MaximumResourceLevel;
         }
@@ -49,9 +35,9 @@ namespace TestApp_QuadTree.Src
 
         public List<Army>[] FightingArmies { get; set; } 
         
-        public TileTypeEnum TileType { get; set; }
+        public Terrain TerrainType { get; set; }
 
-        public ResourceTypeEnum ResourceType { get; set; }
+        public Resource ResourceType { get; set; }
 
         public int CurrentResourceLevel { get; set; }
 

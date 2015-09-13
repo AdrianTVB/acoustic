@@ -12,10 +12,13 @@ namespace TestApp_QuadTree.Src
         public string PlayerName { get; set; }
         public List<Army> Armies { get; set; }
 
+        public char PlayerCode { get; set; }
+
         public Dictionary<Player, bool> IsHostile { get; set; }
 
-        public Player(string playerName, List<Army> units = null)
+        public Player(string playerName, char playerCode, List<Army> units = null)
         {
+            PlayerCode = playerCode;
             PlayerName = playerName;
             Armies = units ?? new List<Army>();
             IsHostile = new Dictionary<Player, bool>();

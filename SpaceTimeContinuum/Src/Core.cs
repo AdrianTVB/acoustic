@@ -32,6 +32,15 @@ namespace SpaceTimeContinuum.Src
                         case "End turn":
                             endTurn = true;
                             break;
+                        case "status-terrain":
+                            DrawMap(MapView.Terrain);
+                            break;
+                        case "status-resource":
+                            DrawMap(MapView.Resource);
+                            break;
+                        case "status-army":
+                            DrawMap(MapView.Army);
+                            break;
                         default:
                             if (command != null && (command.IndexOf("move") > -1 || command.IndexOf("Move") > -1))
                             {
@@ -88,6 +97,86 @@ namespace SpaceTimeContinuum.Src
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        private enum MapView
+        {
+            Terrain, 
+            Resource,
+            Army, 
+        }
+        private void DrawMap(MapView mapViewSetting)
+        {
+            Dictionary<MapView, Func<Tile, string>> mapViewCodeLookup = new Dictionary<MapView, Func<Tile, string>>
+            {
+                { MapView.Army, tile =>
+                {
+                    List<IGrouping<Player, Army>> armiesAtTile = tile.GroupBy(army => army.Owner).ToList();
+                    if(!armiesAtTile.Any())
+                    {
+                        return "---";
+                    }
+                    else if(armiesAtTile.Count == 1)
+                    {
+                        int regimentCount = armiesAtTile.First().Select(army => army.Count).Sum();
+                        return string.Format("{0}-{1}", armiesAtTile.First().Key.PlayerCode, regimentCount);
+                    }
+                    else if(armiesAtTile.Count <= 3)
+                    {
+                        return string.Join("", armiesAtTile.Select(grouping => grouping.Key.PlayerCode));
+                    }
+                    else
+                    {
+                        return "P>3";
+                    }
+                } },
+                { MapView.Terrain, tile =>
+                {
+                    return tile.TerrainType.TerrainCode + "  ";
+                } },
+                { MapView.Resource, tile =>
+                {
+                    return tile.ResourceType.ResourceCode + "  ";
+                } },
+            };
+            
+            DrawMap(mapViewCodeLookup[mapViewSetting]);
+        }
+
+        private void DrawMap(Func<Tile, string> characterSelector)
+        {
+            Console.WriteLine("Current world:");
+            int maxWidth = MyWorld.TileGrid.GetLength(0);
+            int maxHeight = MyWorld.TileGrid.GetLength(1);
+
+            for (int width = maxWidth - 1; width > 0; width--)
+            {
+                Console.Write("{0}   ", width);
+                for (int height = 0; height < maxHeight; height++)
+                {
+                    Tile tile = MyWorld.TileGrid[width, height];
+                    string identifyingCharacter;
+                    if (tile == null)
+                    {
+                        identifyingCharacter = "   ";
+                    }
+                    else
+                    {
+                        identifyingCharacter = characterSelector(tile);
+                    }
+
+                    Console.Write("{0} ", identifyingCharacter);
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.Write("    ");
+            for(int width = 0; width < maxHeight; width++)
+            {
+                Console.Write("{0}   ", width);
+            }
+
+            Console.WriteLine();
         }
 
         public void Run()

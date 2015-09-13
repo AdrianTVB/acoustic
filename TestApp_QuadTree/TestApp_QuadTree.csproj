@@ -50,6 +50,16 @@
     <Compile Include="Src\Player.cs" />
     <Compile Include="Src\Regiment.cs" />
     <Compile Include="Src\Region.cs" />
+    <Compile Include="Src\Resources\Chicken.cs" />
+    <Compile Include="Src\Resources\Moa.cs" />
+    <Compile Include="Src\Resources\Resource.cs" />
+    <Compile Include="Src\Resources\Stone.cs" />
+    <Compile Include="Src\Resources\Wood.cs" />
+    <Compile Include="Src\Terrains\Forest.cs" />
+    <Compile Include="Src\Terrains\Grassland.cs" />
+    <Compile Include="Src\Terrains\Marsh.cs" />
+    <Compile Include="Src\Terrains\Mountains.cs" />
+    <Compile Include="Src\Terrains\Terrain.cs" />
     <Compile Include="Src\Tile.cs" />
     <Compile Include="Src\Army.cs" />
     <Compile Include="Src\UnitType.cs" />
@@ -64,6 +74,7 @@
       <Name>QuadTreeLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

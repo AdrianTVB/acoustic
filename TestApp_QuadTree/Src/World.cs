@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using QuadTreeLibrary;
+using TestApp_QuadTree.Src.Resources;
+using TestApp_QuadTree.Src.Terrains;
 
 namespace TestApp_QuadTree.Src
 {
@@ -15,10 +17,15 @@ namespace TestApp_QuadTree.Src
 
         public Tile[,] TileGrid { get; set; }
 
+        public List<Resource> PossibleResources { get; set; }
+        public List<Terrain> PossibleTerrain { get; set; }
+
         public QuadTree<Tile> TileQuadTree { get; private set; }
 
-        public World(int tileGridHeight, int tileGridWidth)
+        public World(int tileGridHeight, int tileGridWidth, List<Resource> resources, List<Terrain> terrain)
         {
+            PossibleResources = resources;
+            PossibleTerrain = terrain;
             Players = new PlayerList();
             Regions = new List<Region>();
             TileQuadTree = new QuadTree<Tile>(new Size(5, 5), 20);
