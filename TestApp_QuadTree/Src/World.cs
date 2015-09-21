@@ -44,6 +44,21 @@ namespace TestApp_QuadTree.Src
             return true;
         }
 
+        public void IncrementDay()
+        {
+            for(int width = 0; width < TileGrid.GetLength(0); width++)
+            {
+                for(int height = 0; height < TileGrid.GetLength(1); height++)
+                {
+                    Tile tile = TileGrid[width, height];
+                    if(tile != null)
+                    {
+                        tile.IncrementDailyChanges();
+                    }
+                }
+            }
+        }
+
         public class PlayerList : List<Player>
         {
             public new void Add(Player newPlayer)

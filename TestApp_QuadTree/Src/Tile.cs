@@ -93,6 +93,7 @@ namespace TestApp_QuadTree.Src
                         if (!armyStillAlive)
                         {
                             defensiveArmies.Remove(defensiveArmy);
+                            Remove(defensiveArmy);
                             j--;
                         }
                     }
@@ -149,6 +150,7 @@ namespace TestApp_QuadTree.Src
                 }
             }
 
+            newArmy.CurrentTile = this;
             base.Add(newArmy);
         }
         

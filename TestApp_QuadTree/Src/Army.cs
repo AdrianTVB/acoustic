@@ -8,16 +8,18 @@ namespace TestApp_QuadTree.Src
 {
     public class Army : List<Regiment>
     {
-        public Army(string armyName, Tile tile, Player owner)
+        public Army(string armyName, Tile tile, Player owner, char armyIdentifier)
         {
             ArmyName = armyName;
             CurrentTile = tile;
             Owner = owner;
+            ArmyIdentifier = armyIdentifier;
         }
 
         public Tile CurrentTile { get; set; }
         public Player Owner { get; set; }
         public string ArmyName { get; set; }
+        public char ArmyIdentifier { get; set; }
 
         public int ArmyCount
         {
@@ -29,7 +31,7 @@ namespace TestApp_QuadTree.Src
 
         public double CalculateOffensiveStrength()
         {
-            return this.Sum(regiment => CalculateOffensiveStrength());
+            return this.Sum(regiment => regiment.CalculateOffensiveStrength());
         }
         public double CalculateDefensiveStrength()
         {

@@ -27,19 +27,45 @@ namespace SpaceTimeContinuum.Src
                     switch (command)
                     {
                         case "help":
-                        case "Help":
+                        case "h":
+                            Console.WriteLine("-map-terrain");
+                            Console.WriteLine("--mt");
+                            Console.WriteLine("-map-resource");
+                            Console.WriteLine("--mr");
+                            Console.WriteLine("-map-army1");
+                            Console.WriteLine("--ma1");
+                            Console.WriteLine("-map-army2");
+                            Console.WriteLine("--ma2");
+                            Console.WriteLine("-armies");
+                            Console.WriteLine("--a");
+                            Console.WriteLine("-move ['0' = army number] to ['0' = x coord]-['0' = y coord]");
+                            Console.WriteLine("-end-turn");
+                            Console.WriteLine("--e");
                             break;
-                        case "End turn":
+                        case "-end-turn":
+                        case "end":
+                        case "--e":
                             endTurn = true;
                             break;
-                        case "status-terrain":
+                        case "-map-terrain":
+                        case "--mt":
                             DrawMap(MapView.Terrain);
                             break;
-                        case "status-resource":
+                        case "-map-resource":
+                        case "--mr":
                             DrawMap(MapView.Resource);
                             break;
-                        case "status-army":
-                            DrawMap(MapView.Army);
+                        case "-map-army1":
+                        case "--ma1":
+                            DrawMap(MapView.ArmyOne);
+                            break;
+                        case "-map-army2":
+                        case "--ma2":
+                            DrawMap(MapView.ArmyTwo);
+                            break;
+                        case "-armies":
+                        case "--a":
+                            SeeArmies(activePlayer);
                             break;
                         default:
                             if (command != null && (command.IndexOf("move") > -1 || command.IndexOf("Move") > -1))
@@ -103,13 +129,14 @@ namespace SpaceTimeContinuum.Src
         {
             Terrain, 
             Resource,
-            Army, 
+            ArmyOne,
+            ArmyTwo 
         }
         private void DrawMap(MapView mapViewSetting)
         {
             Dictionary<MapView, Func<Tile, string>> mapViewCodeLookup = new Dictionary<MapView, Func<Tile, string>>
             {
-                { MapView.Army, tile =>
+                { MapView.ArmyOne, tile =>
                 {
                     List<IGrouping<Player, Army>> armiesAtTile = tile.GroupBy(army => army.Owner).ToList();
                     if(!armiesAtTile.Any())
@@ -128,6 +155,33 @@ namespace SpaceTimeContinuum.Src
                     else
                     {
                         return "P>3";
+                    }
+                } },
+                { MapView.ArmyTwo, tile =>
+                {
+                    List<IGrouping<Player, Army>> armiesAtTile = tile.GroupBy(army => army.Owner).ToList();
+                    if(!armiesAtTile.Any())
+                    {
+                        return "---";
+                    }
+                    else if(armiesAtTile.Count == 1)
+                    {
+                        if(tile.Count == 1)
+                        {
+                            return string.Join("", tile.Select(army => string.Format("{0}{1}", army.ArmyIdentifier, army.Count)));
+                        }
+                        else if(tile.Count <= 3)
+                        {
+                            return string.Join("", armiesAtTile.First().Select(army => army.ArmyIdentifier));
+                        }
+                        else
+                        {
+                            return "a>3";
+                        }
+                    }
+                    else
+                    {
+                        return "P>1";
                     }
                 } },
                 { MapView.Terrain, tile =>
@@ -179,35 +233,43 @@ namespace SpaceTimeContinuum.Src
             Console.WriteLine();
         }
 
+        public void SeeArmies(Player player)
+        {
+            Console.WriteLine("You have the following units:");
+            for (int i = 0; i < player.Armies.Count; i++)
+            {
+                Army army = player.Armies[i];
+                Console.WriteLine(
+                    string.Format("\t{0}= Army {1}:{2} is at {3}-{4}",
+                    i,
+                    army.ArmyName,
+                    army.ArmyCount,
+                    army.CurrentTile.CoordinateX,
+                    army.CurrentTile.CoordinateY));
+            }
+        }
+
         public void Run()
         {
             int day = 0;
             bool stopApplication = false;
             while (!stopApplication)
             {
-                day++;
-                Console.WriteLine(@"Welcome to day {0} of New Zealand.");
+                Console.WriteLine(@"Welcome to day {0} of New Zealand.", day);
                 foreach (Player player in MyWorld.Players)
                 {
-                    Console.WriteLine(@"Player {0} turn.");
-                    Console.WriteLine("You have the following units:");
-                    for (int i = 0; i < player.Armies.Count; i++)
-                    {
-                        Army army = player.Armies[i];
-                        Console.WriteLine(
-                            @"\t{0}= Army {1}:{2} is at {3}-{4}", 
-                            i,
-                            army.ArmyName, 
-                            army.ArmyCount, 
-                            army.CurrentTile.CoordinateX,
-                            army.CurrentTile.CoordinateY);
-                    }
+                    Console.WriteLine(@"Player {0} turn.", player.PlayerName);
+                    SeeArmies(player);
                     // TODO: Print something about resources.
 
                     Console.WriteLine(@"What would you like to do {0}?", player.PlayerName);
                     TakeCommand(MyWorld, player);
                 }
+
+                day++;
+                MyWorld.IncrementDay();
             }
         }
+        
     }
 }

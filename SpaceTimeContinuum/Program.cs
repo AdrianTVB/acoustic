@@ -88,7 +88,7 @@ namespace SpaceTimeContinuum
             Tile armyTwoStartTile = null;
             for (int width = 0; width < world.TileGrid.GetLength(0); width++)
             {
-                for (int height = 0; height < world.TileGrid.GetLength(0); height++)
+                for (int height = 0; height < world.TileGrid.GetLength(1); height++)
                 {
                     if (world.TileGrid[width, height] != null)
                     {
@@ -105,10 +105,10 @@ namespace SpaceTimeContinuum
                 }
             }
 
-            Army armyOne = new Army("armyOne", armyOneStartTile, playerOne);
+            Army armyOne = new Army("armyOne", armyOneStartTile, playerOne, 'A');
             armyOneStartTile.Add(armyOne);
             playerOne.Armies.Add(armyOne);
-            int regimentCount = randomNumberGenerator.Next(0, 10);
+            int regimentCount = randomNumberGenerator.Next(1, 10);
             for (int i = 0; i < regimentCount; i++)
             {
                 Regiment regiment = new Regiment(1000, new UnitType());
@@ -116,17 +116,17 @@ namespace SpaceTimeContinuum
             }
 
 
-            Player playerTwo = new Player("Player Two", 'T');
+            Player playerTwo = new Player("Player Two", 'B');
             world.Players.Add(playerTwo);
             
-            Army armyTwo = new Army("armyTwo", armyTwoStartTile, playerTwo);
+            Army armyTwo = new Army("armyTwo", armyTwoStartTile, playerTwo, '2');
             armyTwoStartTile.Add(armyTwo);
-            playerTwo.Armies.Add(armyOne);
-            int playerTwoRegimentCount = randomNumberGenerator.Next(0, 10);
+            playerTwo.Armies.Add(armyTwo);
+            int playerTwoRegimentCount = randomNumberGenerator.Next(1, 10);
             for (int i = 0; i < playerTwoRegimentCount; i++)
             {
                 Regiment regiment = new Regiment(1000, new UnitType());
-                armyOne.Add(regiment);
+                armyTwo.Add(regiment);
             }
             
             return world;

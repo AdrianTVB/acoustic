@@ -30,7 +30,16 @@ namespace TestApp_QuadTree.Src
 
         public bool DealDamage(double damageDelt)
         {
-            ManCount = Convert.ToInt32(ManCount * (damageDelt / 10));
+            double remainingMen = ManCount - (damageDelt / 10);
+            if (remainingMen <= 0)
+            {
+                ManCount = 0;
+            }
+            else
+            {
+                ManCount = Convert.ToInt32(remainingMen);
+            }
+
             // TODO: Also update moral here.
 
             return ManCount > 0;
