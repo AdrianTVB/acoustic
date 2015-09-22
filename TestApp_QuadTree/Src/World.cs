@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DeenGames.Utils.AStarPathFinder;
 using QuadTreeLibrary;
 using TestApp_QuadTree.Src.Resources;
 using TestApp_QuadTree.Src.Terrains;
@@ -12,6 +13,12 @@ namespace TestApp_QuadTree.Src
 {
     public class World
     {
+        /// <summary>
+        /// The path finder grid.http://pastebin.com/Ex2UvjPv
+        /// http://www.csharpcity.com/reusable-code/a-path-finding-library/
+        /// http://pastebin.com/Ex2UvjPv
+        /// </summary>
+        private byte[,] pathFinderGrid;
         public PlayerList Players { get; set; }
         public List<Region> Regions { get; set; }
 
@@ -30,6 +37,38 @@ namespace TestApp_QuadTree.Src
             Regions = new List<Region>();
             TileQuadTree = new QuadTree<Tile>(new Size(5, 5), 20);
             TileGrid = new Tile[tileGridHeight, tileGridWidth];
+            UpdatePathFinderGrid();
+        }
+
+        public void UpdatePathFinderGrid()
+        {
+            int worldWidth = TileGrid.GetLength(0);
+            int worldHeight = TileGrid.GetLength(1);
+
+            int pathfinderGridWidth = PathFinderHelper.RoundToNearestPowerOfTwo(worldWidth);
+            int pathfinderGridHeight = PathFinderHelper.RoundToNearestPowerOfTwo(worldHeight);
+
+            pathFinderGrid = new byte[pathfinderGridWidth, pathfinderGridHeight];
+
+            for (int width = 0; width < pathfinderGridWidth; width++)
+            {
+                for (int height = 0; height < pathfinderGridHeight; height++)
+                {
+                    if (width < worldWidth && height < worldHeight)
+                    {
+                        Tile tile = TileGrid[width, height];
+                        if (tile != null)
+                        {
+                            if (!(tile.TerrainType is Marsh))
+                            {
+                                pathFinderGrid[width, height] = PathFinderHelper.EMPTY_TILE;
+                            }
+                        }
+                    }
+
+                    pathFinderGrid[width, height] = PathFinderHelper.BLOCKED_TILE;
+                }
+            }
         }
 
         public bool AddTile(Tile tile)

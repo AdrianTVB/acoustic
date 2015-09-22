@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceTimeContinuum", "Space
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadTreeLibrary", "Lib\QuadTreeLibrary\QuadTreeLibrary\QuadTreeLibrary.csproj", "{3D91DBB8-F6AB-48CE-A17E-5414ECBA9D0A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalLibraries", "ExternalLibraries", "{ABD79A5F-489C-48ED-B95C-511FC3DF4CDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

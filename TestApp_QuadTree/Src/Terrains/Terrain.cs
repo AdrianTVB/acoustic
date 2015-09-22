@@ -10,7 +10,6 @@ namespace TestApp_QuadTree.Src.Terrains
     {
         private string terrainName;
         private string terrainCode;
-
         public string TerrainName
         {
             get

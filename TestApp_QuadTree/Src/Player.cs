@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DeenGames.Utils.AStarPathFinder;
+using TestApp_QuadTree.Src.Terrains;
 
 namespace TestApp_QuadTree.Src
 {
@@ -23,7 +25,7 @@ namespace TestApp_QuadTree.Src
             Armies = units ?? new List<Army>();
             IsHostile = new Dictionary<Player, bool>();
         }
-
+        
         public Tile MoveArmy(World world, int armyIndex, int newCoordinateX, int newCoordinateY)
         {
             if (Armies.Count < armyIndex)
