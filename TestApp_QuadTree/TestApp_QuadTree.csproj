@@ -50,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Actions\MoveAction.cs" />
     <Compile Include="Src\InvalidCommandException.cs" />
+    <Compile Include="Src\Order.cs" />
     <Compile Include="Src\Player.cs" />
     <Compile Include="Src\Regiment.cs" />
     <Compile Include="Src\Region.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="Src\Terrains\Terrain.cs" />
     <Compile Include="Src\Tile.cs" />
     <Compile Include="Src\Army.cs" />
+    <Compile Include="Src\Actions\UnitAction.cs" />
     <Compile Include="Src\UnitType.cs" />
     <Compile Include="Src\World.cs" />
   </ItemGroup>

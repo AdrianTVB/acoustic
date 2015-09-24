@@ -80,33 +80,33 @@ namespace SpaceTimeContinuum.Src
                                         int coordinateY;
                                         if (int.TryParse(commandElements[4], out coordinateY))
                                         {
-                                            Tile tile = activePlayer.MoveArmy(world, armyIndex, coordinateX, coordinateY);
-                                            Console.WriteLine(@"Army succesfully moved to {0}-{1}", tile.CoordinateX, tile.CoordinateY);
+                                            Order order = activePlayer.MoveArmy(world, armyIndex, coordinateX, coordinateY);
+                                            Console.WriteLine(@"Army succesfully moving to {0}-{1}. Will take {2} days.", coordinateX, coordinateY, order.TimeUntilOrderCompletion);
 
-                                            if (tile.FightGoingOn)
-                                            {
-                                                Console.WriteLine("There is a fight going on in the tile we have just moved into");
-                                                for (int i = 0; i < tile.FightingArmies.Count(); i++)
-                                                {
-                                                    Console.WriteLine(@"Side {0}", i);
-                                                    foreach (Army army in tile.FightingArmies[i])
-                                                    {
-                                                        Console.WriteLine(@"\t {0}: {1}-{2}", army.Owner.PlayerName, army.ArmyName, army.ArmyCount);
-                                                    }
-                                                }
+                                            //if (tile.FightGoingOn)
+                                            //{
+                                            //    Console.WriteLine("There is a fight going on in the tile we have just moved into");
+                                            //    for (int i = 0; i < tile.FightingArmies.Count(); i++)
+                                            //    {
+                                            //        Console.WriteLine(@"Side {0}", i);
+                                            //        foreach (Army army in tile.FightingArmies[i])
+                                            //        {
+                                            //            Console.WriteLine(@"\t {0}: {1}-{2}", army.Owner.PlayerName, army.ArmyName, army.ArmyCount);
+                                            //        }
+                                            //    }
 
-                                                List<Army> nuetralArmiesNotInFight = tile
-                                                    .Where(army => tile.FightingArmies.All(fightingSide => !fightingSide.Contains(army)))
-                                                    .ToList();
-                                                if (nuetralArmiesNotInFight.Any())
-                                                {
-                                                    Console.WriteLine("Nuetral Armies:");
-                                                    foreach (Army army in nuetralArmiesNotInFight)
-                                                    {
-                                                        Console.WriteLine(@"\t {0}: {1}-{2}", army.Owner.PlayerName, army.ArmyName, army.ArmyCount);
-                                                    }
-                                                }
-                                            }
+                                            //    List<Army> nuetralArmiesNotInFight = tile
+                                            //        .Where(army => tile.FightingArmies.All(fightingSide => !fightingSide.Contains(army)))
+                                            //        .ToList();
+                                            //    if (nuetralArmiesNotInFight.Any())
+                                            //    {
+                                            //        Console.WriteLine("Nuetral Armies:");
+                                            //        foreach (Army army in nuetralArmiesNotInFight)
+                                            //        {
+                                            //            Console.WriteLine(@"\t {0}: {1}-{2}", army.Owner.PlayerName, army.ArmyName, army.ArmyCount);
+                                            //        }
+                                            //    }
+                                            //}
 
                                             break;
                                         }
